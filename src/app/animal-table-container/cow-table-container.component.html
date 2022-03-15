@@ -1,0 +1,9 @@
+<app-table
+  [tableData]="(cowService.animals | async)"
+  [rowHeaders]="headers"
+  [idField]="'animalId'"
+  (deleteRow)="cowService.deleteAnimal($event)"
+  (addRow)="cowService.newAnimal($event)"
+  (editField)="cowService.editAnimal($event.id, $event.data)"
+>
+</app-table>

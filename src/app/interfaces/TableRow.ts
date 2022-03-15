@@ -1,3 +1,3 @@
-export default interface Row {
-
+export default interface TableRow {
+  data: any;
 }

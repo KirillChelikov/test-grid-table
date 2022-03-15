@@ -1,20 +1,3 @@
-<table>
-  <tr>
-    <th *ngFor="let header of rowHeaders">
-     {{header}}
-    </th>
-  </tr>
-  <tr *ngFor="let row of tableData">
-    <td *ngFor="let header of rowHeaders">
-      {{row.data[header]}}
-    </td>
-    <td (click)="handleDeleteRowClick(row)">
-      X
-    </td>
-  </tr>
-</table>
-<style>
-  table, th, td {
-    border: 1px solid;
-  }
-</style>
+table, th, td {
+   border: 1px solid;
+ }

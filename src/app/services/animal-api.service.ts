@@ -1,31 +1,28 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import Animal from "../classes/Animal";
-import {map, Observable} from "rxjs";
+import {Observable} from "rxjs";
+import {AnimalDTO} from "../interfaces/AnimalDTO";
 
-@Injectable({providedIn: 'root'})
-export abstract class AnimalService {
+@Injectable()
+export class AnimalApiService {
   protected type: string;
   constructor(private http: HttpClient) {
   }
 
-  abstract createAnimals(data: AnimalDTO[]): Animal[]
-
-  getAnimals(): Observable<Animal[]> {
-    return this.http.get(`animal/${this.type}/`).pipe(
-      map((data:any) => this.createAnimals(data.result))
-    )
+  getAnimals(): Observable<AnimalDTO[]> {
+    return this.http.get<AnimalDTO[]>(`animal/${this.type}/`)
   }
 
-  newAnimal(animal: Animal): Observable<any> {
-    return this.http.post(`animal/${this.type}/`, animal);
+  newAnimal(animal: Animal): Observable<{ id: string }> {
+    return this.http.post<{ id: string }>(`animal/${this.type}/`, animal);
   }
 
-  editAnimal(animal: Animal): Observable<any> {
+  editAnimal(animal: Animal): Observable<unknown> {
     return this.http.put(`animal/${this.type}/${animal.data.animalId}`, animal)
   }
 
-  deleteAnimal(id: number): Observable<any> {
+  deleteAnimal(id: string): Observable<unknown> {
     return this.http.delete(`animal/${this.type}/${id}`)
   }
  }

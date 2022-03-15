@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<table>
+  <tr>
+    <th *ngFor="let header of rowHeaders">
+      {{header}}
+    </th>
+  </tr>
+  <tr *ngFor="let row of tableData">
+    <ng-container>
+      <td *ngFor="let header of rowHeaders" (dblclick)="handleEditFieldClick(row, header)">
+        <div *ngIf="editingField.id === row.data[idField] && editingField.header === header">
+          <input
+            [(ngModel)]="editingFieldValue">
+          <button (click)="handleDoneEditing()">
+            DONE
+          </button>
+        </div>
+        <p *ngIf="!(editingField.id === row.data[idField] && editingField.header === header)">
+          {{row.data[header]}}
+        </p>
+
+      </td>
+      <td (click)="handleDeleteRowClick(row)">
+        X
+      </td>
+    </ng-container>
+  </tr>
+  <tr *ngIf="isAdding">
+    <td *ngFor="let header of rowHeaders">
+      <input [id]="header" #newRowInput type="text"/>
+    </td>
+    <td>
+      <button (click)="handleAddNewRowCLick()">
+        DONE
+      </button>
+    </td>
+  </tr>
+</table>
+
+<button (click)="isAdding = true" *ngIf="!isAdding">
+  new row
+</button>
