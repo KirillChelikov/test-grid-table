@@ -14,7 +14,7 @@ export default class Animal implements TableRow {
 
   edit(newData: AnimalDTO): void {
     Object.keys(newData).forEach((key) => {
-      if (this.data[key]) {
+      if (this.data.hasOwnProperty(key)) {
         this.data[key] = newData[key];
       }
     });

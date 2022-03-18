@@ -21,15 +21,15 @@ export default abstract class AnimalService<T extends Animal> {
     )
   }
 
-  editAnimal(id: string, data: AnimalDTO): Observable<unknown> | void {
+  editAnimal(id: string, data: AnimalDTO): void {
     const animal = this.animals$.getValue().find(animal => animal.data.animalId === id);
     if (animal) {
       animal.edit(data);
-      return this.animalApiService.editAnimal(animal);
+      this.animalApiService.editAnimal(animal).subscribe();
     }
   }
 
-  newAnimal(animalDTO: AnimalDTO): void{
+  newAnimal(animalDTO: AnimalDTO): void {
     const animal = this.createAnimal(animalDTO);
     this.animalApiService.newAnimal(animal).subscribe((value) => {
       animal.id = value.id;
@@ -37,10 +37,10 @@ export default abstract class AnimalService<T extends Animal> {
     })
   }
 
-  deleteAnimal(id: string): Observable<unknown> {
+  deleteAnimal(id: string): void {
     const animalIdx = this.animals$.getValue().findIndex(animal => animal.data.animalId === id);
     this.animals$.getValue().splice(animalIdx, 1);
-    return this.animalApiService.deleteAnimal(id);
+    this.animalApiService.deleteAnimal(id).subscribe();
   }
 
   private addAnimals(dto: AnimalDTO[]): void {

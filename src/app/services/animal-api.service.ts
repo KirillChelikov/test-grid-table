@@ -11,7 +11,7 @@ export class AnimalApiService {
   }
 
   getAnimals(): Observable<AnimalDTO[]> {
-    return this.http.get<AnimalDTO[]>(`animal/${this.type}/`)
+    return this.http.get<AnimalDTO[]>(`animal/${this.type}/`);
   }
 
   newAnimal(animal: Animal): Observable<{ id: string }> {
@@ -19,10 +19,10 @@ export class AnimalApiService {
   }
 
   editAnimal(animal: Animal): Observable<unknown> {
-    return this.http.put(`animal/${this.type}/${animal.data.animalId}`, animal)
+    return this.http.put(`animal/${this.type}`, {id: animal.data.animalId, data: animal.data});
   }
 
   deleteAnimal(id: string): Observable<unknown> {
-    return this.http.delete(`animal/${this.type}/${id}`)
+    return this.http.delete(`animal/${this.type}`, {body: {id}});
   }
  }
